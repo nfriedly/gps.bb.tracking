@@ -35,6 +35,7 @@ src\gps\dao\XMLLocationData.java
 src\gps\dao\XMLRouteData.java
 src\gps\dao\XMLSettingsData.java
 src\gps\service\GpsService.java
+src\gps\service\HttpService.java
 src\gps\service\IGPSService.java
 src\gps\ui\HomeScreen.java
 src\gps\ui\ListLocationsScreen.java
