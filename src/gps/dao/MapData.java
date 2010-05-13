@@ -5,7 +5,6 @@ import gps.service.HttpService;
 import javax.microedition.location.Location;
 
 import net.rim.device.api.system.EncodedImage;
-import net.rim.device.api.ui.component.Dialog;
 
 public class MapData {
 	

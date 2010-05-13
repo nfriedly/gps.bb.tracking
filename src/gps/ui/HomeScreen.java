@@ -1,5 +1,7 @@
 package gps.ui;
 
+import javax.microedition.location.Location;
+
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
@@ -8,6 +10,8 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.FieldChangeListener;
+
+import gps.service.GpsService;
 
 public class HomeScreen extends TrackerBaseScreen implements FieldChangeListener {
 	ButtonField btnRecord;
@@ -25,12 +29,27 @@ public class HomeScreen extends TrackerBaseScreen implements FieldChangeListener
 		recordManager.add(btnStopRecord);
 		add(recordManager);
 	}
-	class GpsCurLocationMenuItem extends MenuItem{
+	
+	class GpsCurLocationMenuItem extends MenuItem {
+		
+		
 		public GpsCurLocationMenuItem(){
 			super ("My Location", 20, 10);
 		}
+		
+		
+        
+        
+		
 		public void run(){
-			Dialog.inform("Getting current GPS coordiantes");
+			
+			
+			//double longitude = coordinates.getQualifiedCoordinates().getLongitude();
+			//double latitude = coordinates.getQualifiedCoordinates().getLatitude();
+			
+			//System.out.println(longitude);
+			
+			//Dialog.inform("Current Location - Longitude: " + longitude + " Latitude: " + latitude);
 		}
 	}
 	class GpsRoutesMenuItem extends MenuItem{

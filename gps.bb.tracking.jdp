@@ -37,8 +37,10 @@ src\gps\dao\XMLSettingsData.java
 src\gps\service\GpsService.java
 src\gps\service\HttpService.java
 src\gps\service\IGPSService.java
+src\gps\ui\GpsTrackingApplication.java
 src\gps\ui\HomeScreen.java
 src\gps\ui\ListLocationsScreen.java
+src\gps\ui\ListRoutesScreen.java
 src\gps\ui\MainScreen.java
 src\gps\ui\NewLocationScreen.java
 src\gps\ui\SettingsScreen.java

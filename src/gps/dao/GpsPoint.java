@@ -6,8 +6,8 @@ import javax.microedition.location.LocationProvider;
 
 public class GpsPoint {
 	
-	private LocationProvider _locationProvider;
-	private Location _location;
+	public LocationProvider _locationProvider;
+	public Location location;
 	
 	// Returns a one time Location object for current location
 	public Location getCurrentLoc()
@@ -16,13 +16,15 @@ public class GpsPoint {
 	        Criteria c = new Criteria();
 	        c.setCostAllowed(false);
 	        _locationProvider = LocationProvider.getInstance(c);
-	        _location = _locationProvider.getLocation(100);
+	        location = _locationProvider.getLocation(100);
         
         }  catch(Exception e) {
         	e.printStackTrace();
         }
         
-        return _location;
+        //System.out.println(location.getQualifiedCoordinates().getLongitude());
+        
+        return location;
 	}
 	
 	

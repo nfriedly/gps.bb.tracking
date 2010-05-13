@@ -22,7 +22,7 @@ public class ListLocationsScreen extends TrackerBaseScreen {
 			//Navigate to Back
 		}
 	}
-	class GpsHomeMenuItem extends MenuItem{
+	class GpsHomeMenuItem extends MenuItem {
 		public GpsHomeMenuItem(){
 			super ("Home", 20, 10);
 		}
