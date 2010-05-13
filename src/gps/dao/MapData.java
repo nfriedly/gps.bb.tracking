@@ -22,6 +22,7 @@ public class MapData extends UiApplication {
 	
 	private static int _interval = 1;
 	private LocationProvider _locationProvider;
+	private Location _location;
 	
 	private HTTPClient _http = new HTTPClient();
 	private byte[] _data = new byte[256];
@@ -32,6 +33,7 @@ public class MapData extends UiApplication {
         // running thread the application's event dispatch thread.
         new MapData().enterEventDispatcher();
     }
+	
 	
 	public MapData() {
 		
@@ -115,6 +117,8 @@ public class MapData extends UiApplication {
 
 	private class LocationListenerImpl implements LocationListener
     {
+		private EncodedImage EncodedImg;
+		
         // Methods ----------------------------------------------------------------------------------------------
         /**
          * @see javax.microedition.location.LocationListener#locationUpdated(LocationProvider,Location)
@@ -127,8 +131,14 @@ public class MapData extends UiApplication {
                 latitude = location.getQualifiedCoordinates().getLatitude();
                 
              // Grab our URL then encode the image.
-                _data = _http.getPage(LOCATION_URL + "?center=" + longitude + "," + latitude + SETTINGS_STRING);
-    	        EncodedImage EncodedImg = EncodedImage.createEncodedImage(_data,0,_data.length);
+                try {
+                	_data = _http.getPage(LOCATION_URL + "?center=" + longitude + "," + latitude + SETTINGS_STRING);
+                	EncodedImg = EncodedImage.createEncodedImage(_data,0,_data.length);
+                } 
+                catch(Exception e)
+                {
+                	Dialog.alert("No connection could be made");
+                }
                 
     	     // Information to be displayed on the device.
                 StringBuffer sb = new StringBuffer();

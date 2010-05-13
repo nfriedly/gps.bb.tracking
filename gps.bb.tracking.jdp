@@ -21,6 +21,7 @@ AutoRestart=0
 ]
 ExcludeFromBuildAll=0
 [Files
+img\gps.png
 src\gps\dao\GpsPoint.java
 src\gps\dao\HTTPClient.java
 src\gps\dao\ILocationData.java
@@ -49,6 +50,7 @@ HaveAlxImports=0
 HaveDefs=0
 HaveImports=0
 [Icons
+img\gps.png
 ]
 [ImplicitRules
 ]
@@ -65,5 +67,6 @@ RibbonPosition=0
 RunOnStartup=0
 StartupTier=7
 SystemModule=0
+Title=Gps Tracking
 Type=0
 UserData=|src

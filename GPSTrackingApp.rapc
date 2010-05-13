@@ -1,0 +1,9 @@
+MIDlet-Name: gps.bb.tracking
+MIDlet-Version: 0.0
+MIDlet-Vendor: <unknown>
+MIDlet-Jar-URL: gps.bb.tracking.jar
+MIDlet-Jar-Size: 0
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: Gps Tracking,img/gps.png,
+RIM-MIDlet-Flags-1: 0

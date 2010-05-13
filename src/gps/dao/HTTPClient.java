@@ -23,7 +23,7 @@ public class HTTPClient {
 			}
 			catch(Exception e)
 			{
-				
+				e.printStackTrace();
 			}
 		} 
 		
@@ -44,9 +44,9 @@ public class HTTPClient {
 			// Here is your image in byte format.
 			data = db.getArray(); 
 		}
-		catch(Exception e)
+		catch(Exception ex)
 		{
-			
+			ex.printStackTrace();
 		}
 		
 		return data;
