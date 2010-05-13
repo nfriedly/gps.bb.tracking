@@ -31,7 +31,7 @@ public class MapData {
         } 
         catch(Exception e)
         {
-        	Dialog.alert("No connection could be made");
+        	e.printStackTrace();
         }
         
 		return EncodedImg;
