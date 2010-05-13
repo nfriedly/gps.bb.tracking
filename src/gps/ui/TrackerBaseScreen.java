@@ -1,5 +1,8 @@
 package gps.ui;
 
-public class TrackerBaseScreen extends MainScreen {
+import net.rim.device.api.ui.container.MainScreen;
 
+public class TrackerBaseScreen extends MainScreen {
+	//override make menu
+	
 }

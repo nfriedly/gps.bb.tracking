@@ -1,17 +1,17 @@
 package gps.ui;
 
-import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 
-public class ListLocationsScreen extends TrackerBaseScreen {
-	public ListLocationsScreen(){
+
+public class ListRoutesScreen extends TrackerBaseScreen {
+	public ListRoutesScreen(){
 		init();
 	}
 	public void init(){
-		LabelField ListRoutesLabel = new LabelField("List Locations Screen");
+		LabelField ListRoutesLabel = new LabelField("List Routes Screen");
 		add(ListRoutesLabel);
 	}
 	class GpsBackMenuItem extends MenuItem{
