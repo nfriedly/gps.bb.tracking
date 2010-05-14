@@ -23,7 +23,6 @@ ExcludeFromBuildAll=0
 [Files
 img\gps.png
 src\gps\dao\GpsPoint.java
-src\gps\dao\HTTPClient.java
 src\gps\dao\ILocationData.java
 src\gps\dao\IMapData.java
 src\gps\dao\IRouteData.java
@@ -31,6 +30,8 @@ src\gps\dao\ISettingsData.java
 src\gps\dao\Location.java
 src\gps\dao\MapData.java
 src\gps\dao\Route.java
+src\gps\dao\XMLCompareFiles.java
+src\gps\dao\XMLFileBase.java
 src\gps\dao\XMLLocationData.java
 src\gps\dao\XMLRouteData.java
 src\gps\dao\XMLSettingsData.java
