@@ -18,6 +18,8 @@ public class GpsService extends Thread implements ISettingsData {
 	private double _longitude;
 	private double _latitude;
 	boolean retval = false;
+	
+	private Route current_route = new Route();
 
 	public void run() {
 		startLocationUpdate();
@@ -52,8 +54,24 @@ public class GpsService extends Thread implements ISettingsData {
 		return retval;
 	}
 	
+	public void updateMap(){
+		// Add it to the current route
+		current_route.add(point);
+		// take the current_route and convert it to a url
+		// have the http service download that url
+		// update the screen
+		// if we're currently downloading a url, just return without doing anything	
+		// potential optimization: skip points that are very close to each other or in the middle of a straight line when building the map url
+	}
+	
 	private class LocationListenerImpl implements LocationListener
     {
+		// keep a refference to the parent class to call whenever we have new data
+		private GpsService parent;
+		
+		public LocationListenerImpl(GpsService parent){
+			this.parent = parent;	
+		}
         public void locationUpdated(LocationProvider provider, Location location)
         {
             if(location.isValid())
@@ -64,7 +82,11 @@ public class GpsService extends Thread implements ISettingsData {
             	Runnable showGpsUnsupportedDialog = new Runnable() 
                 {
                     public void run() {
-                        Dialog.inform("Current Location - Longitude: " + _longitude + " Latitude: " + _latitude);
+						// every time we get new data....
+						// create a GpsPoint (our internal data format)
+						GpsPoint point = new GpsPoint(_longitude, _latitude);
+						// and tell the parent class to update the map
+						parent.updateMap(point);
                     }
                 };
                 
