@@ -44,6 +44,7 @@ src\gps\ui\ListLocationsScreen.java
 src\gps\ui\ListRoutesScreen.java
 src\gps\ui\MainScreen.java
 src\gps\ui\NewLocationScreen.java
+src\gps\ui\SaveRoute.java
 src\gps\ui\SettingsScreen.java
 src\gps\ui\ShowLocationScreen.java
 src\gps\ui\StatisticsScreen.java

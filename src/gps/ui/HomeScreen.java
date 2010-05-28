@@ -5,6 +5,7 @@ import javax.microedition.location.Location;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
@@ -17,39 +18,40 @@ import gps.service.GpsService;
 public class HomeScreen extends TrackerBaseScreen implements FieldChangeListener {
 	ButtonField btnRecord;
 	ButtonField btnStopRecord;
-	LabelField location;
+	public LabelField location;
+	public BitmapField map;
 	
 	public HomeScreen(){
 		init();
 	}
 	public void init(){
-		GpsService service = new GpsService(this);
-		location = new LabelField();
 		
+		GpsService service = new GpsService(this);
+		
+		location = new LabelField();
+		map = new BitmapField(); 
 		btnRecord = new ButtonField("Record", ButtonField.CONSUME_CLICK | ButtonField.FIELD_LEFT);
 		btnRecord.setChangeListener(this);
 	    btnStopRecord = new ButtonField("Stop", ButtonField.CONSUME_CLICK | ButtonField.FIELD_RIGHT);
 		btnStopRecord.setChangeListener(this);
 		HorizontalFieldManager recordManager = new HorizontalFieldManager();
+		
+		recordManager.add(map);
+		recordManager.add(location);
+		
 		recordManager.add(btnRecord);
 		recordManager.add(btnStopRecord);
+		
 		add(recordManager);
 	}
 	
 	class GpsCurLocationMenuItem extends MenuItem {
 		
-		
 		public GpsCurLocationMenuItem(){
 			super ("My Location", 20, 10);
 		}
-		
-		
-        
-        
-		
+
 		public void run(){
-			
-			
 			//double longitude = coordinates.getQualifiedCoordinates().getLongitude();
 			//double latitude = coordinates.getQualifiedCoordinates().getLatitude();
 			
