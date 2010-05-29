@@ -7,6 +7,7 @@ import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.FieldChangeListener;
@@ -16,10 +17,15 @@ import gps.service.GpsService;
 public class HomeScreen extends TrackerBaseScreen implements FieldChangeListener {
 	ButtonField btnRecord;
 	ButtonField btnStopRecord;
+	LabelField location;
+	
 	public HomeScreen(){
 		init();
 	}
 	public void init(){
+		GpsService service = new GpsService(this);
+		location = new LabelField();
+		
 		btnRecord = new ButtonField("Record", ButtonField.CONSUME_CLICK | ButtonField.FIELD_LEFT);
 		btnRecord.setChangeListener(this);
 	    btnStopRecord = new ButtonField("Stop", ButtonField.CONSUME_CLICK | ButtonField.FIELD_RIGHT);

@@ -6,9 +6,11 @@ import javax.microedition.location.LocationListener;
 import javax.microedition.location.LocationProvider;
 
 import net.rim.device.api.ui.UiApplication;
-import net.rim.device.api.ui.component.Dialog;
 
+import gps.dao.GpsPoint;
 import gps.dao.ISettingsData;
+import gps.dao.Route;
+import gps.ui.HomeScreen;
 
 public class GpsService extends Thread implements ISettingsData {
 	
@@ -19,7 +21,14 @@ public class GpsService extends Thread implements ISettingsData {
 	private double _latitude;
 	boolean retval = false;
 	
+	//reference to the parent screen
+	HomeScreen parent;
+	
 	private Route current_route = new Route();
+	
+	public GpsService(HomeScreen homeScreen) {
+		parent = homeScreen;
+	}
 
 	public void run() {
 		startLocationUpdate();
@@ -35,7 +44,7 @@ public class GpsService extends Thread implements ISettingsData {
 			{
 	        	retval = false;
 			} else {
-				_locationProvider.setLocationListener(new LocationListenerImpl(), _interval, 1, 1);
+				_locationProvider.setLocationListener(new LocationListenerImpl(this), _interval, 1, 1);
 				retval = true;
 			}
 			
@@ -54,9 +63,11 @@ public class GpsService extends Thread implements ISettingsData {
 		return retval;
 	}
 	
-	public void updateMap(){
+	public void updateMap(GpsPoint point){
 		// Add it to the current route
-		current_route.add(point);
+		current_route.addPoint(point);
+		// pass the gps point to the home screen's update gps label method
+		
 		// take the current_route and convert it to a url
 		// have the http service download that url
 		// update the screen
@@ -66,7 +77,7 @@ public class GpsService extends Thread implements ISettingsData {
 	
 	private class LocationListenerImpl implements LocationListener
     {
-		// keep a refference to the parent class to call whenever we have new data
+		// keep a reference to the parent class to call whenever we have new data
 		private GpsService parent;
 		
 		public LocationListenerImpl(GpsService parent){
