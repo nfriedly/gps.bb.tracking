@@ -15,6 +15,9 @@ import gps.ui.HomeScreen;
 
 public class GpsService extends Thread implements ISettingsData {
 	
+	final HttpService http = new HttpService();
+	byte[] data = new byte[256];
+	
 	private String base_url = "http://maps.google.com/maps/api/staticmap?";
 	
 	private LocationProvider _locationProvider;
@@ -69,19 +72,26 @@ public class GpsService extends Thread implements ISettingsData {
 		return retval;
 	}
 	
+	public void startRecording(){
+		record = true;
+	}
+	
+	public void stopRecording(){
+		record = false;
+	}
+	
 	public void updateMap(GpsPoint point){
-		final HttpService http = new HttpService();
-		byte[] data = new byte[256];
 		// Add it to the current route
-		//current_route.addPoint(point);
+		current_route.addPoint(point);
 		// pass the gps point to the home screen's update gps label method
 		parent.location.setText(point.getLat() + ", " +  point.getLon());
+		
 		// take the current_route and convert it to a url
 		// have the http service download that url
 		// update the screen
 		// if we're currently downloading a url, just return without doing anything	
 		// potential optimization: skip points that are very close to each other or in the middle of a straight line when building the map url
-		if(record == false && http.status == true){
+		if(record == false){
 			data = http.getPage(base_url + "center="+point.getLat()+","+point.getLon()+"&zoom=12&size=400x400&sensor=false");
 			EncodedImage EncodedImg = EncodedImage.createEncodedImage(data,0,data.length);
 			parent.map.setImage(EncodedImg);
@@ -109,6 +119,7 @@ public class GpsService extends Thread implements ISettingsData {
 						// every time we get new data....
 						// create a GpsPoint (our internal data format)
 						GpsPoint point = new GpsPoint(_longitude, _latitude);
+						
 						// and tell the parent class to update the map
 						parent.updateMap(point);
 						System.out.println("Listener Output: " + point.getLat() + ", " + point.getLon());

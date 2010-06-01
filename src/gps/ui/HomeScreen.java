@@ -30,6 +30,7 @@ public class HomeScreen extends TrackerBaseScreen implements FieldChangeListener
 		
 		location = new LabelField();
 		map = new BitmapField(); 
+		
 		btnRecord = new ButtonField("Record", ButtonField.CONSUME_CLICK | ButtonField.FIELD_LEFT);
 		btnRecord.setChangeListener(this);
 	    btnStopRecord = new ButtonField("Stop", ButtonField.CONSUME_CLICK | ButtonField.FIELD_RIGHT);

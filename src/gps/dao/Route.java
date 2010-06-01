@@ -23,7 +23,8 @@ public class Route {
 	 * @param point
 	 */
 	public void addPoint(GpsPoint point){
-		this.points[this.points.length] = point;
+		//this.points[this.points.length] = point;
+		
 	}
 
 	public GpsPoint[] getPoints() {

@@ -9,8 +9,6 @@ import javax.microedition.io.StreamConnection;
 import net.rim.device.api.util.DataBuffer;
 
 public class HttpService {
-	public boolean status = true;
-	
 	public byte[] getPage(String url) {
 		
 		HttpConnection stream = null;
@@ -20,7 +18,6 @@ public class HttpService {
 		{ 
 			try
 			{ 
-				status = false;
 				stream = (HttpConnection)Connector.open(url);
 				in = stream.openInputStream();
 			}
@@ -44,8 +41,7 @@ public class HttpService {
 			}
 			
 			in.close(); 
-			status = true;
-			
+
 			// Here is your image in byte format.
 			data = db.getArray(); 
 		}
