@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 RIM-COD-Module-Name: GPSTrackingApp
 RIM-COD-Module-Dependencies: net_rim_cldc,net_rim_locationapi
-MIDlet-Jar-Size: 39438
-MIDlet-1: ,,
-RIM-COD-Creation-Time: 1273859942
+MIDlet-Jar-Size: 54987
+MIDlet-1: Gps Tracking,img/gps.png,
+RIM-COD-Creation-Time: 1275434407
 MIDlet-Jar-URL: gps.bb.tracking.jar
 RIM-COD-URL: GPSTrackingApp.cod
-RIM-COD-SHA1: 48 e6 8d ad 46 8c e5 9e fb d0 71 4d d3 85 5e a9 76 93 89 53
-RIM-COD-Size: 15816
+RIM-COD-SHA1: 7b e1 07 29 ed 3f f7 b5 09 f9 2e 42 08 77 ab 7e 19 46 65 e3
+RIM-COD-Size: 20720
 MicroEdition-Configuration: CLDC-1.1
 MIDlet-Version: 0.0
 MIDlet-Name: gps.bb.tracking
