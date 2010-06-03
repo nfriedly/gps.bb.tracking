@@ -1,12 +1,14 @@
 package gps.dao;
 
+import java.util.Vector;
+
 /**
  * Stores a list of GpsPoints and a name and ID
  * @author nathan
  */
 
 public class Route {
-	private GpsPoint[] points;
+	private Vector points = new Vector();
 	private String name;
 	private int id;
 
@@ -14,7 +16,7 @@ public class Route {
 	 * Sets all points at the same time
 	 * @param points
 	 */
-	public void setPoints(GpsPoint[] points) {
+	public void setPoints(Vector points) {
 		this.points = points;
 	}
 	
@@ -23,11 +25,10 @@ public class Route {
 	 * @param point
 	 */
 	public void addPoint(GpsPoint point){
-		//this.points[this.points.length] = point;
-		
+		points.addElement( point );
 	}
 
-	public GpsPoint[] getPoints() {
+	public Vector getPoints() {
 		return points;
 	}
 
