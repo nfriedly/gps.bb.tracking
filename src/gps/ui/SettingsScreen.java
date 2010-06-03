@@ -1,12 +1,21 @@
 package gps.ui;
+import java.io.IOException;
+
+import org.xml.sax.SAXException;
+
+import gps.dao.XMLSettingsData;
+import gps.dao.ISettingsData;
 import net.rim.device.api.ui.component.*;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.xml.parsers.ParserConfigurationException;
 
 public class SettingsScreen extends TrackerBaseScreen implements FieldChangeListener {
 	CheckboxField metricCheckBox;
+	EditField fuelEditField;
+	ButtonField saveButton;
 	public SettingsScreen (){
 		init();
 	}
@@ -14,19 +23,9 @@ public class SettingsScreen extends TrackerBaseScreen implements FieldChangeList
 		LabelField settingsLabel = new LabelField("Settings Screen");
 		add(settingsLabel);
 		add(new SeparatorField());
-		EditField fuelEditField = new EditField("Fuel Rate:", "");
+		fuelEditField = new EditField("Fuel Rate:", "");
+		saveButton = new ButtonField("Save");
 		add(fuelEditField);
-		metricCheckBox = new CheckboxField("Use Metric Units", false);
-		metricCheckBox.setChangeListener(this);
-		add(metricCheckBox);
-	}
-	class GpsBackMenuItem extends MenuItem{
-		public GpsBackMenuItem(){
-			super ("Back", 20, 10);
-		}
-		public void run(){
-			//Navigate to Back
-		}
 	}
 	class GpsHomeMenuItem extends MenuItem{
 		public GpsHomeMenuItem(){
@@ -39,11 +38,27 @@ public class SettingsScreen extends TrackerBaseScreen implements FieldChangeList
 			thisUiApplication.pushScreen(hs);
 		}
 	}
-	public void fieldChanged(Field field, int context) {
-		if (field == metricCheckBox)
-		{
-		
-		}
-		
+	protected void makeMenu(Menu menu, int i){
+		//call make menu
+		super.makeMenu(menu, i);
+		menu.add(new GpsHomeMenuItem());
 	}
+	public void fieldChanged(Field field, int context) {
+        ISettingsData settings = null;
+        if (field == metricCheckBox)
+       {
+       }
+        if (field == saveButton)
+       {
+            double price = Double.parseDouble(fuelEditField.getText());
+            try {
+               settings = XMLSettingsData.getInstance();
+               settings.setDollarsPerGallon(price);
+       } catch (Exception e) {
+           // something happened, alert the user!
+    	   
+       }
+       }
+
+    }
 }

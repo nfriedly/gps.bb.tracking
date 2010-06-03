@@ -8,7 +8,23 @@ import javax.microedition.io.StreamConnection;
 
 import net.rim.device.api.util.DataBuffer;
 
-public class HttpService {
+public class HttpService extends Thread {
+	
+	// Reference to the parent to call when we have new image data
+	GpsService parent;
+	
+	// the url we're downloading
+	String url;
+	
+	public HttpService(GpsService parent, String url){
+		this.parent = parent;
+		this.url = url;
+	}
+	
+	public void run(){
+		byte[] image = getPage(url);
+		parent.newImage(image);
+	}
 	public byte[] getPage(String url) {
 		
 		HttpConnection stream = null;
@@ -52,4 +68,5 @@ public class HttpService {
 		
 		return data;
 	}
+	
 }

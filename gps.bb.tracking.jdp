@@ -34,6 +34,7 @@ src\gps\dao\XMLCompareFiles.java
 src\gps\dao\XMLFileBase.java
 src\gps\dao\XMLLocationData.java
 src\gps\dao\XMLRouteData.java
+src\gps\dao\XMLRouteData_GPX.java
 src\gps\dao\XMLSettingsData.java
 src\gps\service\GpsService.java
 src\gps\service\HttpService.java

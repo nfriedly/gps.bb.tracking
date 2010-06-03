@@ -1,7 +1,5 @@
 package gps.ui;
 
-import gps.ui.SettingsScreen.GpsBackMenuItem;
-import gps.ui.SettingsScreen.GpsHomeMenuItem;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
@@ -15,14 +13,7 @@ public class StatisticsScreen extends TrackerBaseScreen {
 		LabelField settingsLabel = new LabelField("Statistics Screen");
 		add(settingsLabel);
 	}
-	class GpsBackMenuItem extends MenuItem{
-		public GpsBackMenuItem(){
-			super ("Back", 20, 10);
-		}
-		public void run(){
-			//Navigate to Back
-		}
-	}
+	
 	class GpsHomeMenuItem extends MenuItem{
 		public GpsHomeMenuItem(){
 			super ("Home", 20, 10);
@@ -48,7 +39,6 @@ public class StatisticsScreen extends TrackerBaseScreen {
 	protected void makeMenu(Menu menu, int i){
 		//call make menu
 		super.makeMenu(menu, i);
-		menu.add(new GpsBackMenuItem());
 		menu.add(new GpsHomeMenuItem());
 		menu.add(new GpsSettingsMenuItem());
 	}

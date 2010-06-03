@@ -9,26 +9,28 @@ import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.UiApplication;
 
 import gps.dao.GpsPoint;
-import gps.dao.ISettingsData;
 import gps.dao.Route;
 import gps.ui.HomeScreen;
 
-public class GpsService extends Thread implements ISettingsData {
+public class GpsService{
 	
-	final HttpService http = new HttpService();
+	HttpService http;
 	byte[] data = new byte[256];
 	
 	private String base_url = "http://maps.google.com/maps/api/staticmap?";
 	
 	private LocationProvider _locationProvider;
-	private int _interval = 3;
+	private int _interval = 5;
 	
 	private double _longitude;
 	private double _latitude;
 	
 	boolean retval = false;
-	boolean record = false;
+	static boolean record = false;
 	
+	
+	// are we currently waiting on an image to download?
+	private boolean downloading = false;
 	
 	//reference to the parent screen
 	HomeScreen parent;
@@ -72,11 +74,11 @@ public class GpsService extends Thread implements ISettingsData {
 		return retval;
 	}
 	
-	public void startRecording(){
+	public static void startRecording(){
 		record = true;
 	}
 	
-	public void stopRecording(){
+	public static void stopRecording(){
 		record = false;
 	}
 	
@@ -84,18 +86,36 @@ public class GpsService extends Thread implements ISettingsData {
 		// Add it to the current route
 		current_route.addPoint(point);
 		// pass the gps point to the home screen's update gps label method
-		parent.location.setText(point.getLat() + ", " +  point.getLon());
+		parent.location.setText("Latitude: " + point.getLat() + ", Longitude:" +  point.getLon());
 		
-		// take the current_route and convert it to a url
-		// have the http service download that url
-		// update the screen
-		// if we're currently downloading a url, just return without doing anything	
-		// potential optimization: skip points that are very close to each other or in the middle of a straight line when building the map url
-		if(record == false){
-			data = http.getPage(base_url + "center="+point.getLat()+","+point.getLon()+"&zoom=12&size=400x400&sensor=false");
-			EncodedImage EncodedImg = EncodedImage.createEncodedImage(data,0,data.length);
-			parent.map.setImage(EncodedImg);
+		
+		// if we're not already downloading an image
+		if(downloading == false){
+			// then start downloading one:
+			downloading = true;
+			// take the current_route and convert it to a url
+			// and pass it to a new http service
+			http = new HttpService(this, base_url + "center="+point.getLat()+","+point.getLon()+"&zoom=12&size=400x400&sensor=false");
+			// and start the download. 
+			// It'll take care of itself from here and call newImage() when it's done
+			http.start();
 		}
+		// else: do not start to download an image, just update the screen
+		
+		if(record){
+			// then .. add the current location to the current route.
+			// .. but we already did that.
+		} 
+	}
+	
+	/**
+	 * This is called by http service when it finishes downloading an image
+	 * @param data
+	 */
+	public void newImage(byte[] data) {
+		downloading = false;
+		EncodedImage EncodedImg = EncodedImage.createEncodedImage(data,0,data.length);
+		parent.bitmapField.setImage(EncodedImg);
 	}
 	
 	private class LocationListenerImpl implements LocationListener
@@ -135,4 +155,5 @@ public class GpsService extends Thread implements ISettingsData {
             // Not implemented.
         }        
     }
+
 }

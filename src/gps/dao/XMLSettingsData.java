@@ -18,34 +18,12 @@ import org.xml.sax.SAXException;
 public class XMLSettingsData extends XMLFileBase implements ISettingsData {
 	
 	// local instance of the settings file
-	private Document doc;
+	private static Document doc;
 	
 	// local instances of the settings nodes
 	private Node metricsEnabled;
-	private Node dollarsPerGallon;
+	private static Node dollarsPerGallon;
 	private Node milesPerGallon;
-	
-	// instance holder - this class is a singleton
-	private static XMLSettingsData instance;
-	
-	/**
-	 * This class is a singleton, this method will get the current instance of it.
-	 * 
-	 * usage: 
-	 * 
-	 * ISettingsData settings = XMLSettingsData.getInstance();
-	 * settings.setMilesPerGallon(30.2);
-	 * 
-	 * @return
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 */
-	public static ISettingsData getInstance() throws IOException, ParserConfigurationException{
-		if(instance.equals(null)){
-			instance = new XMLSettingsData();
-		}
-		return (ISettingsData)instance;
-	}
 
 	/**
 	 * Reads the xml file into memory or creates one if that fails
@@ -104,7 +82,21 @@ public class XMLSettingsData extends XMLFileBase implements ISettingsData {
 		}
 		return elements.item(1);
 	}
-	
+	// instance holder - this class is a singleton
+    private static XMLSettingsData instance;
+    
+    /**
+     * This class is a singleton, this method will get the current instance of it.
+     * @return
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
+    public static ISettingsData getInstance() throws IOException, ParserConfigurationException{
+        if(instance.equals(null)){
+            instance = new XMLSettingsData();
+        }
+        return (ISettingsData)instance;
+    }
 	/**
 	 * Saves the document to the settings.xml file
 	 * @throws IOException
@@ -149,5 +141,4 @@ public class XMLSettingsData extends XMLFileBase implements ISettingsData {
 		milesPerGallon.setNodeValue(Double.toString(mpg));
 		save();
 	}
-	
 }
