@@ -1,8 +1,5 @@
 package gps.ui;
 
-import gps.ui.ShowLocationScreen.GpsBackMenuItem;
-import gps.ui.ShowLocationScreen.GpsHomeMenuItem;
-import gps.ui.ShowLocationScreen.GpsSettingsMenuItem;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
@@ -26,6 +23,9 @@ public class NewLocationScreen extends TrackerBaseScreen {
 			UiApplication thisUiApplication = UiApplication.getUiApplication();
 			thisUiApplication.pushScreen(ss);
 		}
+	}
+	class SaveRoute extends TrackerBaseScreen {
+		// dummy class
 	}
 	class GpsSettingsMenuItem extends MenuItem  {
 		public GpsSettingsMenuItem(){

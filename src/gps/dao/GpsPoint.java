@@ -55,5 +55,12 @@ public class GpsPoint {
 
 	public Date getTimestamp() {
 		return timestamp;
+	}
+
+	public boolean equalsLocation(GpsPoint otherPoint) {
+		return (otherPoint != null && (
+				lat == otherPoint.getLat() && lat == otherPoint.getLon()
+			)
+		);
 	}	
 }

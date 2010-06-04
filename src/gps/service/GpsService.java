@@ -1,5 +1,8 @@
 package gps.service;
 
+import java.util.Enumeration;
+import java.util.Vector;
+
 import javax.microedition.location.Location;
 import javax.microedition.location.LocationException;
 import javax.microedition.location.LocationListener;
@@ -14,8 +17,9 @@ import gps.ui.HomeScreen;
 
 public class GpsService{
 	
-	HttpService http;
-	byte[] data = new byte[256];
+	// http is started in the constructor
+	HttpService http = new HttpService();
+	//byte[] data = new byte[256];
 	
 	private String base_url = "http://maps.google.com/maps/api/staticmap?";
 	
@@ -28,9 +32,8 @@ public class GpsService{
 	boolean retval = false;
 	static boolean record = false;
 	
-	
-	// are we currently waiting on an image to download?
-	private boolean downloading = false;
+	//last point for comparison
+	GpsPoint lastPoint = null;
 	
 	//reference to the parent screen
 	HomeScreen parent;
@@ -39,6 +42,9 @@ public class GpsService{
 	
 	public GpsService(HomeScreen homeScreen) {
 		parent = homeScreen;
+		
+		// fire up our http service so it's ready when we need it
+		http.start(); 
 		
 		if(startLocationUpdate()){
 			System.out.println("GPS Initialized!");
@@ -83,39 +89,51 @@ public class GpsService{
 	}
 	
 	public void updateMap(GpsPoint point){
+		
 		// Add it to the current route
 		current_route.addPoint(point);
+		
+		// check if we have a image already waiting on us
+		if(http.dataReady == true){
+			System.out.println("Image downloaded successfully");
+			try{
+				// this usually works
+				EncodedImage EncodedImg = EncodedImage.createEncodedImage(http.data,0,http.data.length);
+				parent.bitmapField.setImage(EncodedImg);
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+			// set the url back to it's default state so that we know we can give it a new one
+			http.url = null;
+		}
+		
+		// shortcut: if we havn't moved, don't do anything further
+		if(point.equalsLocation(lastPoint)){
+			return;
+		}
+
 		// pass the gps point to the home screen's update gps label method
 		parent.location.setText("Latitude: " + point.getLat() + ", Longitude:" +  point.getLon());
 		
-		
-		// if we're not already downloading an image
-		if(downloading == false){
-			// then start downloading one:
-			downloading = true;
-			// take the current_route and convert it to a url
-			// and pass it to a new http service
-			http = new HttpService(this, base_url + "center="+point.getLat()+","+point.getLon()+"&zoom=12&size=400x400&sensor=false");
-			// and start the download. 
-			// It'll take care of itself from here and call newImage() when it's done
-			http.start();
+		// if there is no url that http service is currently downloading, give it a new one
+		if (http.url == null){
+			System.out.println("Downloading a new image");
+			String url = base_url + "center="+point.getLat()+","+point.getLon()+"&zoom=12&size=400x380&sensor=false";
+			url += "&path=color:0x0000ff";
+			Vector recentPoints = current_route.getRecentPoints(10);
+			for (Enumeration e = recentPoints.elements() ; e.hasMoreElements() ;) {
+		         GpsPoint p = (GpsPoint) e.nextElement();
+		         url += "|" + p.getLat() + "," + p.getLon();
+		     }
+			System.out.println("current url: " + url);
+			http.url = url;
+			http.interrupt();
 		}
-		// else: do not start to download an image, just update the screen
 		
 		if(record){
 			// then .. add the current location to the current route.
 			// .. but we already did that.
 		} 
-	}
-	
-	/**
-	 * This is called by http service when it finishes downloading an image
-	 * @param data
-	 */
-	public void newImage(byte[] data) {
-		downloading = false;
-		EncodedImage EncodedImg = EncodedImage.createEncodedImage(data,0,data.length);
-		parent.bitmapField.setImage(EncodedImg);
 	}
 	
 	private class LocationListenerImpl implements LocationListener
